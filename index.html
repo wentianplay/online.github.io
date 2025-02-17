@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务器状态监控</title>
+    <title>文天玩服务器状态监控</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,67 +11,82 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: center;
         }
-        .server {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            padding: 20px;
-        }
-        .offline {
-            color: red;
-        }
-        .online {
-            color: green;
+        th {
+            background-color: #4CAF50;
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <h1>服务器状态监控</h1>
+<h1>服务器状态监控</h1>
+<table>
+    <thead>
+        <tr>
+            <th>服务器位置</th>
+            <th>在线状态</th>
+            <th>在线时间</th>
+        </tr>
+    </thead>
+    <tbody id="server-status">
+        <tr>
+            <td>湖北天门(三网专线)</td>
+            <td id="status-1">在线</td>
+            <td id="time-1">00:00:00</td>
+        </tr>
+        <tr>
+            <td>上海青浦(电信专线)</td>
+            <td id="status-2">在线</td>
+            <td id="time-2">00:00:00</td>
+        </tr>
+        <tr>
+            <td>上海青浦(联通专线)</td>
+            <td id="status-3">在线</td>
+            <td id="time-3">00:00:00</td>
+        </tr>
+        <tr>
+            <td>上海青浦(移动专线)</td>
+            <td id="status-4">在线</td>
+            <td id="time-4">00:00:00</td>
+        </tr>
+        <tr>
+            <td>美国纽约(Verizon)</td>
+            <td id="status-5">在线</td>
+            <td id="time-5">00:00:00</td>
+        </tr>
+    </tbody>
+</table>
 
-    <div id="server-list"></div>
+<script>
+    const serverCount = 5;
+    let serverUptime = Array(serverCount).fill(0); // 在线时间计数器
 
-    <script>
-        const servers = [
-            { name: "湖北天门(三网)", status: "在线", uptime: "120小时" },
-            { name: "上海青浦(电信)", status: "在线", uptime: "98小时" },
-            { name: "上海青浦(联通)", status: "离线", uptime: "N/A" },
-            { name: "上海青浦(移动)", status: "在线", uptime: "115小时" },
-            { name: "美国纽约(未知)", status: "在线", uptime: "130小时" },
-        ];
+    function formatTime(seconds) {
+        const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        return `${hours}:${minutes}:${secs}`;
+    }
 
-        function renderServers() {
-            const serverList = document.getElementById('server-list');
-            serverList.innerHTML = ''; // 清空当前内容
-            servers.forEach(server => {
-                const serverDiv = document.createElement('div');
-                serverDiv.className = 'server';
-                serverDiv.innerHTML = `
-                    <h2>${server.name}</h2>
-                    <p class="${server.status === '在线' ? 'online' : 'offline'}">状态: ${server.status}</p>
-                    <p>在线时间: ${server.uptime}</p>
-                `;
-                serverList.appendChild(serverDiv);
-            });
+    function updateUptime() {
+        serverUptime = serverUptime.map(time => time + 1); // 每秒增加1
+        for (let i = 1; i <= serverCount; i++) {
+            document.getElementById(`time-${i}`).innerText = formatTime(serverUptime[i - 1]);
         }
+    }
 
-        renderServers();
+    setInterval(updateUptime, 1000); // 每秒更新在线时间
+</script>
 
-        // 禁止右键
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // 禁止查看源代码
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-                e.preventDefault();
-            }
-        });
-    </script>
 </body>
 </html>
