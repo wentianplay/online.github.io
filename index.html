@@ -1,80 +1,95 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文天玩WenTianPlay服务器在线状态</title>
+    <title>文天玩WenTianPlay服务器状态监测-文天玩网络科技有限公司</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
             text-align: center;
-            padding: 50px;
+            padding: 20px;
         }
         .server {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             padding: 20px;
             margin: 10px;
             display: inline-block;
+            width: 250px;
         }
-        .online {
-            color: green;
-        }
-        .offline {
-            color: red;
+        h1 {
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
 
-    <h1>服务器在线状态</h1>
-    <div id="servers"></div>
+<h1>文天玩服务器在线状态监测</h1>
 
-    <script>
-        const servers = [
-            { location: "湖北天门(三网专线)", online: true },
-            { location: "上海青浦(电信专线)", online: true },
-            { location: "上海青浦(联通专线)", online: true },
-            { location: "上海青浦(移动专线)", online: false },
-            { location: "美国纽约(Verizon)", online: true }
-        ];
+<div class="server" id="server1">
+    <h2>湖北天门(三网专线)</h2>
+    <p>状态：在线</p>
+    <p id="time1"></p>
+</div>
 
-        function updateServerStatus() {
-            const serversDiv = document.getElementById("servers");
-            serversDiv.innerHTML = ''; // 清空之前的状态显示
+<div class="server" id="server2">
+    <h2>上海青浦(电信专线)</h2>
+    <p>状态：在线</p>
+    <p id="time2"></p>
+</div>
 
-            servers.forEach(server => {
-                const serverDiv = document.createElement("div");
-                serverDiv.className = "server";
-                serverDiv.innerHTML = `
-                    <h2>${server.location}</h2>
-                    <p class="${server.online ? 'online' : 'offline'}">
-                        状态: ${server.online ? '在线' : '离线'}
-                    </p>
-                `
-                serversDiv.appendChild(serverDiv);
-            
+<div class="server" id="server3">
+    <h2>上海青浦(联通专线)</h2>
+    <p>状态：在线</p>
+    <p id="time3"></p>
+</div>
 
-            </section>
-					<script>
-					window.onload=function starttime(){
-					        time(h1,'2015/1/10');   
-					        ptimer = setTimeout(starttime,1000); 
-					}
-					    function time(obj,futimg){
-					        var nowtime = new Date().getTime(); 
-					        var futruetime =  new Date(futimg).getTime(); 
-					        var msec = nowtime-futruetime; 
-					        var time = (msec/1000);  
-					        var day = parseInt(time/86400); 
-					        var hour = parseInt(time/3600)-24*day;    
-					        var minute = parseInt(time%3600/60); 
-					        var second = parseInt(time%60); 
-					        obj.innerHTML="文天玩WenTianPlay已运行"+day+"天"+h
-    </script>
+<div class="server" id="server4">
+    <h2>上海青浦(移动专线)</h2>
+    <p>状态：在线</p>
+    <p id="time4"></p>
+</div>
+
+<div class="server" id="server5">
+    <h2>美国纽约(Verizon)</h2>
+    <p>状态：在线</p>
+    <p id="time5"></p>
+</div>
+
+<script>
+    function startTime(startDateString, timeElementId) {
+        const startDate = new Date(startDateString).getTime();
+        const timeElement = document.getElementById(timeElementId);
+
+        function updateTime() {
+            const now = new Date().getTime();
+            const elapsedSeconds = Math.floor((now - startDate) / 1000);
+            const days = Math.floor(elapsedSeconds / 86400);
+            const hours = Math.floor((elapsedSeconds % 86400) / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+
+            timeElement.innerHTML = `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();  // 初始化显示
+    }
+
+    window.onload = function() {
+        // 启动时间计算，假设所有服务器的启动时间都是相同的。
+        const startDate = '2015/01/10'; // 假设的启动时间
+        startTime(startDate, 'time1');
+        startTime(startDate, 'time2');
+        startTime(startDate, 'time3');
+        startTime(startDate, 'time4');
+        startTime(startDate, 'time5');
+    }
+</script>
 
 </body>
 </html>
