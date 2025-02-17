@@ -90,6 +90,31 @@
         startTime(startDate, 'time5');
     }
 </script>
+<head>
+    <style>
+        /* 禁用文本选择 */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+        }
+    </style>
+    <script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // 防止检测到F12
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</head>
 
 </body>
 </html>
