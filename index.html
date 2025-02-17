@@ -54,17 +54,26 @@
                     <p class="${server.online ? 'online' : 'offline'}">
                         状态: ${server.online ? '在线' : '离线'}
                     </p>
-                `;
+                `
                 serversDiv.appendChild(serverDiv);
-            });
+            
 
-            // 更新在线时间示例（这里用固定时间代替，可以用实际时间来替换）
-            const onlineDuration = "3691/11/35/27";
-            serversDiv.innerHTML += `<p>在线时间: ${onlineDuration}</p>`;
-        }
-
-        setInterval(updateServerStatus, 10000); // 每10秒更新一次状态
-        updateServerStatus(); // 初始调用以显示状态
+            </section>
+					<script>
+					window.onload=function starttime(){
+					        time(h1,'2015/1/10');   
+					        ptimer = setTimeout(starttime,1000); 
+					}
+					    function time(obj,futimg){
+					        var nowtime = new Date().getTime(); 
+					        var futruetime =  new Date(futimg).getTime(); 
+					        var msec = nowtime-futruetime; 
+					        var time = (msec/1000);  
+					        var day = parseInt(time/86400); 
+					        var hour = parseInt(time/3600)-24*day;    
+					        var minute = parseInt(time%3600/60); 
+					        var second = parseInt(time%60); 
+					        obj.innerHTML="文天玩WenTianPlay已运行"+day+"天"+h
     </script>
 
 </body>
